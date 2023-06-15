@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NieuwsNU</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        
+        @media (min-width: 1024px) {
+          .top-navbar {
+            display: inline-flex !important;
+          }
+        }
+
+        .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      top: 125%; /* Change 'bottom' to 'top' */
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+ 
+    .story-container {
+      display: flex;
+      overflow-x: auto;
+    }
+
+    .story {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+      /* background-color: #F3F4F6; */
+      background-color: #000;
+      border-radius: 50%;
+      border-style: solid;
+      margin-right: 10px;
+      position: relative;
+    }
+
+    .story-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .story-username {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      color: #FFF;
+      font-weight: bold;
+      font-size: 14px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .story-username::after {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #3B82F6;
+      position: absolute;
+      top: 50%;
+      left: -5px;
+      transform: translateY(-50%);
+    }
+
+    .story-username::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+        </style>
+        
+</head>
+<body class="overflow-x-hidden bg-gray-100" onload="startTimer()">
+        <div class="w-screen text-white py-1 bg-gray-700 border-t border-gray-100 shadow-sm body-font">
+            <div class="container flex flex-col flex-wrap items-center mx-auto md:flex-row">
+    
+                <div class="flex flex-wrap items-center text-base lg:w-2/5 md:ml-auto">
+                    <span>Maandag 12 juni 2023, 12:45</span>
+                </div>
+                <div
+                    class="flex items-center order-first mb-4 font-medium text-white lg:order-none lg:w-1/5 title-font lg:items-center lg:justify-center md:mb-0">
+                    <span id="changingText" class="fade-in">Paramaribo</span>
+                    <span>, Suriname</span>
+                    <div class="ml-2 mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  fill="currentColor" viewBox="0 0 24 24"><path d="M15 17h3l-6 7 2-5h-3l2.802-6h3.042l-1.844 4zm-5-17h-2v2.542h2v-2.542zm-4.793 3.418l-2.156-2.156-1.414 1.414 2.156 2.156 1.414-1.414zm10.875-.981l-1.414-1.414-2.114 2.114 1.414 1.414 2.114-2.114zm-13.686 4.563h-2.396v2h2.396v-2zm-1.626 6.848l1.303 1.517 2.199-1.919-1.303-1.517-2.199 1.919zm19.652-3.332c-.169-3.073-2.75-5.516-5.922-5.516-.736 0-1.438.137-2.086.377-.891-.849-2.086-1.377-3.414-1.377-2.762 0-5 2.238-5 5 0 1.429.609 2.702 1.574 3.608-.363.624-.574 1.343-.574 2.114 0 2.36 1.945 4.273 4.348 4.277l.892-1.999h-.886c-1.297 0-2.354-1.021-2.354-2.278 0-2.118 2.104-2.597 3.488-2.513-.05-1.355.137-5.209 4.012-5.209 3.771 0 4.229 3.771 4.012 5.209 1.509-.105 3.488.437 3.488 2.513 0 1.146-.881 2.087-2.02 2.245l-1.711 2.033h1.377c2.405 0 4.354-1.916 4.354-4.278 0-2.101-1.545-3.847-3.578-4.206zm-11.844 0c-.594.105-1.139.34-1.623.656-.585-.544-.955-1.312-.955-2.172 0-1.654 1.346-3 3-3 .582 0 1.113.182 1.572.47-1.15 1.004-1.905 2.436-1.994 4.046z"/></svg>
+                    </div>
+                    <span>28 °C</span>
+                </div>
+                <div class="inline-flex items-center h-full ml-5 lg:w-2/5 lg:justify-end lg:ml-0">
+                    <select name="" id="" class="bg-transparent mr-2">
+                        <option value="">Nederlands</option>
+                        <option value="">English</option>
+                    </select>
+                    <a href="#_" class="tooltip mr-5 font-medium hover:text-gray-900">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/></svg>
+                      <span class="tooltiptext">RSS</span>
+                    </a>
+                    <a href="#_" class="tooltip mr-5 font-medium hover:text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7.753 18.305c-.261-.586-.789-.991-1.871-1.241-2.293-.529-4.428-.993-3.393-2.945 3.145-5.942.833-9.119-2.489-9.119-3.388 0-5.644 3.299-2.489 9.119 1.066 1.964-1.148 2.427-3.393 2.945-1.084.25-1.608.658-1.867 1.246-1.405-1.723-2.251-3.919-2.251-6.31 0-5.514 4.486-10 10-10s10 4.486 10 10c0 2.389-.845 4.583-2.247 6.305z"/></svg>                        
+                        <span class="tooltiptext">Inloggen</span>
+                      </a>
+                    <a href="#_" class="tooltip mr-5 font-medium hover:text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23.111 20.058l-4.977-4.977c.965-1.52 1.523-3.322 1.523-5.251 0-5.42-4.409-9.83-9.829-9.83-5.42 0-9.828 4.41-9.828 9.83s4.408 9.83 9.829 9.83c1.834 0 3.552-.505 5.022-1.383l5.021 5.021c2.144 2.141 5.384-1.096 3.239-3.24zm-20.064-10.228c0-3.739 3.043-6.782 6.782-6.782s6.782 3.042 6.782 6.782-3.043 6.782-6.782 6.782-6.782-3.043-6.782-6.782zm2.01-1.764c1.984-4.599 8.664-4.066 9.922.749-2.534-2.974-6.993-3.294-9.922-.749z"/></svg>
+                        <span class="tooltiptext">Zoeken</span>  
+                    </a>
+                    <!-- <a href="#_"
+                        class="px-4 py-2 text-xs font-bold text-white uppercase transition-all duration-150 bg-teal-500 rounded shadow outline-none active:bg-teal-600 hover:shadow-md focus:outline-none ease">
+                        Sign Up
+                    </a> -->
+                </div>
+            </div>
+        </div>
+
+        <style>
+          /* CSS for fade animation */
+          .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+          }
+      
+          @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+          }
+      
+          .fade-out {
+            opacity: 1;
+            animation: fadeOut 1s ease-in-out forwards;
+          }
+      
+          @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+          }
+        </style>
+
+        <script>
+          // Array of texts to be displayed
+          var texts = ["Wanica", "Para", "Commewijne", "Marowijne", "Brokopondo", "Saramacca", "Coronie", "Nickerie"];
+      
+          var currentIndex = 0;
+    var changingText = document.getElementById("changingText");
+
+    function changeTextWithFadeAnimation() {
+      changingText.classList.add("fade-out");
+      setTimeout(function() {
+        currentIndex = (currentIndex + 1) % texts.length;
+        changingText.innerHTML = texts[currentIndex];
+        changingText.classList.remove("fade-out");
+        changingText.classList.add("fade-in");
+      }, 1000); // Wait for fade-out animation to complete (1 second)
+    }
+
+    function startTimer() {
+      changeTextWithFadeAnimation();
+      setInterval(changeTextWithFadeAnimation, 5000);
+    }
+        </script>
+
+
+        <!-- NAVBAR -->
+        <!-- component -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" integrity="sha256-x8PYmLKD83R9T/sYmJn1j3is/chhJdySyhet/JuHnfY=" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<nav class="flex w-screen items-center bg-white p-3 flex-wrap">
+      <a href="#" class="p-2 mr-4 inline-flex items-center">
+          <img src="img/example_logo.png" class="w-36" alt="">
+      </a>
+      <button
+        class="text-white inline-flex p-3 hover:bg-gray-900 rounded lg:hidden ml-auto hover:text-white outline-none nav-toggler"
+        data-target="#navigation"
+      >
+        <i class="material-icons">menu</i>
+      </button>
+      <div
+        class="hidden top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto"
+        id="navigation"
+      >
+        <div
+          class="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto"
+        >
+          <a
+            href="#"
+            class="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-gray-400 items-center justify-center hover:bg-gray-900 hover:text-white"
+          >
+            <span>Home</span>
+          </a>
+          <a
+            href="#"
+            class="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-gray-400 items-center justify-center hover:bg-gray-900 hover:text-white"
+          >
+            <span>About</span>
+          </a>
+          <a
+            href="#"
+            class="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-gray-400 items-center justify-center hover:bg-gray-900 hover:text-white"
+          >
+            <span>Services</span>
+          </a>
+          <a
+            href="#"
+            class="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-gray-400 items-center justify-center hover:bg-gray-900 hover:text-white"
+          >
+            <span>Gallery</span>
+          </a>
+          <a
+            href="#"
+            class="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-gray-400 items-center justify-center hover:bg-gray-900 hover:text-white"
+          >
+            <span>Products</span>
+          </a>
+          <a
+            href="#"
+            class="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-gray-400 items-center justify-center hover:bg-gray-900 hover:text-white"
+          >
+            <span>Contact Us</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function() {
+  $(".nav-toggler").each(function(_, navToggler) {
+    var target = $(navToggler).data("target");
+    $(navToggler).on("click", function() {
+      $(target).animate({
+        height: "toggle"
+      });
+    });
+  });
+});
+
+</script> -->
+        <!-- END NAVBAR -->
+
+
+        <!-- HERO -->
+        <!-- component -->
+
+<center>
+    <div class="bg-[url('img/worldwide.jpg')] bg-center">
+        <img src="img/example_logo.png" alt="" class="w-72 ml-4">
+    </div>    
+</center>
+        
+<header>
+    <nav class="bg-gray-700 border-gray-200 px-4 lg:px-6 py-2.5">
+        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+            <a href="#" class="flex items-center invisible">
+                <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
+                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+            </a>
+            <div class="flex items-center lg:order-2">
+                <a href="#" class="invisible text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</a>
+                <a href="#" class="invisible text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Get started</a>
+                <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-white hover:text-gray-900 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                    <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+            <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-red-500 lg:p-0 dark:text-white" aria-current="page">Actueel</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-red-500 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Sport</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-red-500 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Buitenland</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-red-500 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Leefstijl</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-red-500 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Entertainment</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-red-500 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Weersverwachting</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+</div>
+        <!-- END HERO -->
+
+
+        <!-- SCROLL -->
+        <div class="flex bg-red-500 mt-2">
+            <div class="bg-red-500 pt-1" style="border-radius: 0 0 15px 0;">
+              <span class="px-2 font-bold text-white">BREAKING</span>
+            </div>
+            <div class="pt-1 w-full bg-red-200">
+              <marquee behavior="" direction="" class="font-semibold">
+                  <!-- <span class="text-blue-600 pl-28 pr-1">{{ date('d/m/Y', strtotime($marq['date'])) }} <span class="text-gray-500">{{ date( 'H:i', strtotime($marq['time'])) }}</span></span> {{ $marq['content']['title'] }} -->
+                <a href="#" class="hover:text-red-500">Maandagmiddag onweersbuien met windstoten</a>
+                <span class="mx-4">||</span>
+                <a href="#" class="hover:text-red-500">AdeKUS-Infra studenten winnen 2e prijs ontwerpwedstrijd</a>
+              </marquee>
+              </div>
+        </div>
+        
+        <!-- END SCROLL -->
+
+        <main>
+        <div class="p-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="lg:mr-24 w-2/4 md:w-3/4 h-full">
+            <div>
+              <img src="https://www.staatsolie.com/media/2yhknh44/seogs-2023_linkedin_host_staatsolie.png" alt="">
+            </div>
+            <div class="mt-4">
+              <img src="https://gow2.com/media/bltb0wpv/premium-gasoline-en-diesel_-homepage-algemeen.jpg" alt="">
+            </div>
+            <div class="mt-4">
+              <img src="https://aeroin.net/wp-content/uploads/2015/03/routemap.jpg" alt="">
+            </div>
+            <div class="mt-4">
+              <img src="https://www.waterkant.net/wp-content/2019/06/assuria-suriname-hoog.jpg" alt="">
+            </div>
+          </div>
+
+          <style>
+            .custom-text {
+                font-size: x-small;
+              }
+
+              @media (min-width: 768px) {
+                .custom-text {
+                  font-size: 1rem; /* Adjust the desired font size for larger screens */
+                }
+              }
+          </style>
+          <div class="h-full p-4 -ml-24 xs:w-full" >
+            <span class="font-bold">Vandaag: 13 juni 2023</span>
+            <ol>
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>     
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+            </ol>    
+
+            <div class="my-2 xs:w-44">
+              <img src="https://www.franchisezing.com/franchise/wp-content/uploads/2014/09/BurgerKing-Banner.jpg" alt="">
+            </div>
+
+            <ol>
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+            </ol>    
+          </div>
+
+          <style>
+            @media (max-width: 768px) {
+                .custom-width {
+                  width: 145%; /* Adjust the desired font size for larger screens */
+                }
+              }
+          </style>
+          <div class="h-full p-4 md:-mr-24 custom-width">
+            <span class="font-bold">Gisteren: 12 juni 2023</span>
+            <ol>
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>    
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>     
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>     
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>     
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>      
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold  custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>           
+            </ol>    
+            </ol>   
+            
+            <div class="my-4">
+              <img src="https://a.storyblok.com/f/43212/1440x460/477ce0cac2/coca-cola-banner.png" alt="">
+            </div>
+
+            <ol>
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>     
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>     
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                </svg>
+                <a href="" class="hover:text-red-500 font-semibold font-semibold custom-text">VS wil vanaf juli weer lid worden van Unesco Starnieuws</a>
+                <!-- <span class="text-gray-400 text-xs">~ Starnieuws</span> -->
+              </li>     
+            </ol>
+          </div>
+          <div class="md:ml-24 ml-28 w-2/4 md:w-3/4 h-full">
+            <center>
+            <div class=" gap-2 p-2 justify-center bg-white flex-wrap font-semibold	border rounded-md shadow-sm">
+                <span>Live uitzendingen</span>
+                <div class="story-container px-4 py-2">
+                  <div class="story border border-2 border-red-500">
+                    <a href="">
+                      <img class="story-image" src="img/starnieuws.jpg" alt="">
+                    </a>
+                  </div>
+                  <div class="story border border-2 border-red-500">
+                    <a href="">
+                      <img class="story-image" src="img/DBS.png" alt="">
+                    </a>
+                  </div>
+                  <div class="story border border-2 border-red-500">
+                    <a href="">
+                      <img class="story-image" src="img/waterkant.jpg" alt="">
+                    </a>
+                  </div>
+                  <div class="story border border-2 border-red-500">
+                    <a href="">
+                      <img class="story-image" src="img/sh.png" alt="">
+                    </a>
+                  </div>
+                </div> 
+            </div>
+            <div class="mt-4">
+              <img src="https://i.pinimg.com/originals/9e/6d/5f/9e6d5ffb77d58408d6d9a7bf234b2285.jpg" alt="">
+            </div>
+            <div class="mt-4">
+              <img src="https://www.digicelgroup.com/content/dam/digicel/digicel-redesign/markets/jm/teaser/imgoptimised/new-homepage-banner-mobile.jpg" alt="">
+            </div>
+          </center>
+          </div>
+        </div>
+</main>
+<!-- MAIN -->
+  <!-- END MAIN -->
+
+
+<!-- FOOTER -->
+<footer class="w-full text-white bg-gray-700 body-font">
+  <div
+      class="container flex flex-col flex-wrap px-5 py-24 mx-auto md:items-center lg:items-start md:flex-row md:flex-no-wrap">
+      <div class="flex-shrink-0 w-64 mx-auto text-center md:mx-0 md:text-left">
+          <a class="flex items-center justify-center font-medium text-white title-font md:justify-start">
+              <svg class="w-auto h-5 text-gray-900 fill-current" viewBox="0 0 202 69"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                      d="M57.44.672s6.656 1.872 6.656 5.72c0 0-1.56 2.6-3.744 6.552 8.424 1.248 16.744 1.248 23.816-1.976-1.352 7.904-12.688 8.008-26.208 6.136-7.696 13.624-19.656 36.192-19.656 42.848 0 .416.208.624.52.624 4.576 0 17.888-14.352 21.112-18.824 1.144-1.456 4.264.728 3.12 2.392C56.608 53.088 42.152 69 36.432 69c-4.472 0-8.216-5.928-8.216-10.4 0-6.552 11.752-28.08 20.28-42.952-9.984-1.664-20.176-3.64-27.976-3.848-13.936 0-16.64 3.536-17.576 6.032-.104.312-.52.52-.832.312-3.744-7.072-1.456-14.56 14.144-14.56 9.36 0 22.048 4.576 34.944 7.592C54.736 5.04 57.44.672 57.44.672zm46.124 41.08c1.144-1.456 4.264.728 3.016 2.392C100.236 53.088 85.78 69 80.06 69c-4.576 0-8.32-5.928-8.32-10.4v-.208C67.58 64.32 63.524 69 61.34 69c-4.472 0-8.944-4.992-8.944-11.856 0-10.608 15.704-33.072 24.96-33.072 4.992 0 7.384 2.392 8.528 4.576l2.6-4.576s6.656 1.976 6.656 5.824c0 0-13.312 24.336-13.312 30.056 0 .208 0 .624.52.624 4.472 0 17.888-14.352 21.216-18.824zm-40.56 18.72c2.184 0 11.752-13.312 17.368-22.048l4.16-7.488c-8.008-7.904-27.248 29.536-21.528 29.536zm57.564-38.168c-2.184 0-4.992-2.808-4.992-4.784 0-2.912 5.824-14.872 7.28-14.872 2.6 0 6.136 2.808 6.136 6.344 0 2.08-7.176 12.064-8.424 13.312zm-17.68 46.592c-4.472 0-8.216-5.928-8.216-10.4 0-6.656 16.744-34.528 16.744-34.528s6.552 1.976 6.552 5.824c0 0-13.312 24.336-13.312 30.056 0 .208.104.624.624.624 4.472 0 17.888-14.352 21.112-18.824 1.144-1.456 4.264.728 3.12 2.392-6.448 8.944-20.904 24.856-26.624 24.856zM147.244.672s6.656 1.872 6.656 5.72c0 0-25.792 43.784-25.792 53.56 0 .416.208.624.52.624 4.576 0 17.888-14.352 21.112-18.824 1.144-1.456 4.264.728 3.12 2.392C146.412 53.088 131.956 69 126.236 69c-4.472 0-8.216-5.928-8.216-10.4 0-10.4 29.224-57.928 29.224-57.928zM169.7 60.16c3.848-2.392 7.904-6.864 10.816-10.92 6.656-9.464 11.544-20.696 10.504-27.352-.312-3.432-.104-4.056 3.12-2.704 5.2 2.392 11.336 8.632 2.184 22.88-5.2 8.008-12.48 15.288-19.344 19.76-2.704 1.768-6.344 3.328-9.984 4.16-.52.416-1.04.728-1.456.936-1.872 1.352-4.264 2.08-7.592 2.08-14.664 0-16.848-12.272-16.848-16.016 0-2.392 3.224-4.68 4.784-3.744.208.104.312.416.312.624 0 2.808 1.872 13.104 9.984 13.104 7.904 0 3.432-18.304 2.288-27.144-1.456 2.288-3.432 4.992-5.616 8.32-2.6 3.744-5.72 1.456-4.784 0 5.824-8.424 9.152-13.832 11.856-18.616 1.248-2.08 3.328-3.328 6.448-3.328 2.704 0 5.824 3.016 6.864 4.784.312.52 0 1.04-.52 1.144a5.44 5.44 0 00-4.368 5.408c0 6.968 2.6 17.16 1.664 24.856l-.312 1.768z"
+                      fill-rule="nonzero" /></svg>
+          </a>
+          <p class="mt-2 text-sm text-white">Design, Code and Ship!</p>
+          <div class="mt-4">
+              <span class="inline-flex justify-center mt-2 sm:ml-auto sm:mt-0 sm:justify-start">
+                  <a class="text-white cursor-pointer hover:text-white">
+                      <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          class="w-5 h-5" viewBox="0 0 24 24">
+                          <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                      </svg>
+                  </a>
+                  <a class="ml-3 text-white cursor-pointer hover:text-white">
+                      <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          class="w-5 h-5" viewBox="0 0 24 24">
+                          <path
+                              d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z">
+                          </path>
+                      </svg>
+                  </a>
+                  <a class="ml-3 text-white cursor-pointer hover:text-white">
+                      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                          <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                      </svg>
+                  </a>
+                  <a class="ml-3 text-white cursor-pointer hover:text-white">
+                      <svg fill="currentColor" stroke="currentColor" stroke-linecap="round"
+                          stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
+                          <path stroke="none"
+                              d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z">
+                          </path>
+                          <circle cx="4" cy="4" r="2" stroke="none"></circle>
+                      </svg>
+                  </a>
+              </span>
+          </div>
+      </div>
+      <div class="flex flex-wrap flex-grow mt-10 -mb-10 text-center md:pl-20 md:mt-0 md:text-left">
+          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+              <h2 class="mb-3 text-sm font-medium tracking-widest text-white uppercase title-font">About</h2>
+              <nav class="mb-10 list-none">
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-white">Company</a>
+                  </li>
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-white">Careers</a>
+                  </li>
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-white">Blog</a>
+                  </li>
+              </nav>
+          </div>
+          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+              <h2 class="mb-3 text-sm font-medium tracking-widest text-white uppercase title-font">Support</h2>
+              <nav class="mb-10 list-none">
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-gray-900">Contact Support</a>
+                  </li>
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-gray-900">Help Resources</a>
+                  </li>
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-gray-900">Release Updates</a>
+                  </li>
+              </nav>
+          </div>
+          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+              <h2 class="mb-3 text-sm font-medium tracking-widest text-white uppercase title-font">Platform
+              </h2>
+              <nav class="mb-10 list-none">
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-gray-900">Terms &amp; Privacy</a>
+                  </li>
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-gray-900">Pricing</a>
+                  </li>
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-gray-900">FAQ</a>
+                  </li>
+              </nav>
+          </div>
+          <div class="w-full px-4 lg:w-1/4 md:w-1/2">
+              <h2 class="mb-3 text-sm font-medium tracking-widest text-white uppercase title-font">Contact</h2>
+              <nav class="mb-10 list-none">
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-gray-900">Send a Message</a>
+                  </li>
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-gray-900">Request a Quote</a>
+                  </li>
+                  <li class="mt-3">
+                      <a class="text-white cursor-pointer hover:text-gray-900">+123-456-7890</a>
+                  </li>
+              </nav>
+          </div>
+      </div>
+  </div>
+  <div class="bg-gray-300">
+      <div class="container px-5 py-4 mx-auto">
+          <p class="text-sm text-gray-700 capitalize xl:text-center">© 2023 All rights reserved </p>
+      </div>
+  </div>
+</footer>
+<!-- END FOOTER -->
+
+<!-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+<style>
+@import url(https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css);
+@-webkit-keyframes fadeIn {
+  from { opacity:0 }
+  to { opacity:1 }
+}
+@keyframes fadeIn {
+  from { opacity:0 }
+  to { opacity:1 }
+}
+@-webkit-keyframes fadeInUp {
+  from { opacity:0; transform:translate3d(0,10%,0) }
+  to { opacity:1; transform:translate3d(0,0,0) }
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform:translate3d(0,10%,0) }
+  to { opacity:1; transform:translate3d(0,0,0) }
+}
+
+dialog[open] { -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeInUp; animation-name:fadeInUp }
+dialog::backdrop { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(3px); -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeIn; animation-name:fadeIn  }
+</style>
+
+<div class="w-screen h-screen bg-gray-100 flex items-center justify-center px-5 py-5 relative" x-data="{showCookieBanner:true}">
+    <section class="w-full p-5 lg:px-24 absolute bottom-0 bg-gray-600" x-show="showCookieBanner">
+        <div class="md:flex items-center -mx-3">
+            <div class="md:flex-1 px-3 mb-5 md:mb-0">
+                <p class="text-center md:text-left text-white text-xs leading-tight md:pr-12">We and selected partners and related companies, use cookies and similar technologies as specified in our Cookies Policy. You agree to consent to the use of these technologies by clicking Accept, or by continuing to browse this website. You can learn more about how we use cookies and set cookie preferences in Settings.</p>
+            </div>
+            <div class="px-3 text-center">
+                <button id="btn" class="py-2 px-8 bg-gray-800 hover:bg-gray-900 text-white rounded font-bold text-sm shadow-xl mr-3" @click.prevent="document.getElementById('cookiesModal').showModal()">Cookie settings</button>
+                <button id="btn" class="py-2 px-8 bg-green-400 hover:bg-green-500 text-white rounded font-bold text-sm shadow-xl" @click.prevent="showCookieBanner=!showCookieBanner">Accept cookies</button>
+            </div>
+        </div>
+    </section>
+    <dialog id="cookiesModal" class="h-auto w-11/12 md:w-1/2 bg-white overflow-hidden rounded-md p-0">
+        <div class="flex flex-col w-full h-auto">
+            <div class="flex w-full h-auto items-center px-5 py-3">
+                <div class="w-10/12 h-auto text-lg font-bold">
+                    Cookie settings
+                </div>
+                <div class="flex w-2/12 h-auto justify-end">
+                    <button @click.prevent="document.getElementById('cookiesModal').close();" class="cursor-pointer focus:outline-none text-gray-400 hover:text-gray-800">
+                        <i class="mdi mdi-close-circle-outline text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex w-full items-center bg-gray-100 border-b border-gray-200 px-5 py-3 text-sm">
+                <div class="flex-1">
+                    <p>Strictly necessary cookies</p>
+                </div>
+                <div class="w-10 text-right">
+                    <i class="mdi mdi-check-circle text-2xl text-green-400 leading-none"></i>
+                </div>
+            </div>
+            <div class="flex w-full items-center bg-gray-100 border-b border-gray-200 px-5 py-3 text-sm">
+                <div class="flex-1">
+                    <p>Cookies that remember your settings</p>
+                </div>
+                <div class="w-10 text-right">
+                    <i class="mdi mdi-check-circle text-2xl text-green-400 leading-none"></i>
+                </div>
+            </div>
+            <div class="flex w-full items-center bg-gray-100 border-b border-gray-200 px-5 py-3 text-sm">
+                <div class="flex-1">
+                    <p>Cookies that measure website use</p>
+                </div>
+                <div class="w-10 text-right">
+                    <i class="mdi mdi-check-circle text-2xl text-green-400 leading-none"></i>
+                </div>
+            </div>
+            <div class="flex w-full items-center bg-gray-100 border-b border-gray-200 px-5 py-3 text-sm">
+                <div class="flex-1">
+                    <p>Cookies that help with our communications and marketing</p>
+                </div>
+                <div class="w-10 text-right">
+                    <i class="mdi mdi-check-circle text-2xl text-green-400 leading-none"></i>
+                </div>
+            </div>
+            <div class="flex w-full px-5 py-3 justify-end">
+                <button @click.prevent="document.getElementById('cookiesModal').close();" class="py-2 px-8 bg-gray-800 hover:bg-gray-900 text-white rounded font-bold text-sm shadow-xl">Save settings</button>
+            </div>
+        </div>
+    </dialog>
+</div> -->
+
+<script>
+  function scrollCarousel(direction) {
+    const carousel = document.querySelector('.carousel');
+    const scrollAmount = direction * carousel.offsetWidth;
+    carousel.scrollBy({
+      left: scrollAmount,
+      behavior: 'smooth'
+    });
+  }
+</script>
+</body>
+</html>
